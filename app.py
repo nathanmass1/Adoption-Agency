@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from model import db, connect_db, Pet, AddPetForm, EditPetForm
+from play import get_pets
 import datetime
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -15,9 +16,21 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 connect_db(app)
 db.create_all()
 
+params = {
+  'species': 'Dog',
+  'limit' : 5,
+  'sort' : 'random'
+}
 
 @app.route("/")
 def home_page():
+    
+    # Grab all the pets as a list of dictionary for pets (key word arguments) and load to the database.
+    list_pets = get_pets(params)
+    for pet_dict in list_pets:
+        pet = Pet(**pet_dict) # Unloads the keyword arguments
+        db.session.add(pet)
+        db.session.commit()
 
     pets = Pet.query.filter_by(available = True)
 
@@ -78,8 +91,6 @@ def edit_pet(id):
 
     else:
         return render_template("edit_pet.html", form=form, pet=pet)
-
-
 
 
 
