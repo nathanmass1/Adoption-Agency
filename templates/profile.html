@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+<br>
+<br>
+
+<h1> {{ pet.name }} </h1>
+
+<img src="{{ pet.photo_url }}" alt="photo_url" height="600" width="400">
+<h2> {{ pet.age }} </h2>
+<h2> {{ pet.species }} </h2>
+<h3> {{ pet.notes}} </h3>
+<h1> {{ pet.available }} </h1>
+
+<form class="form-inline" action="/pets/{{ pet.id }}/edit">
+    <button type="submit" class="btn btn-primary">Edit Pet</button>
+</form>
+
+{% endblock %}

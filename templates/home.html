@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+<br>
+<br>
+
+<h1> Pets! </h1>
+
+<div class="card-columns">
+    {% for pet in pets %}
+
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src= "{{ pet.photo_url }}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title"> <b>{{ pet.name }} </b></h5> <h5>is available! </h5>
+        </div>
+    </div>
+    <form class="form-inline" action="/pets/{{ pet.id }}">
+        <button type="submit" class="btn btn-primary">Profile</button>
+    </form>
+
+    {% endfor %}
+</div>
+
+<form class="form-inline" action="/add">
+    <button type="submit" class="btn btn-primary">Add a Pet</button>
+</form>
+
+{% endblock %}
